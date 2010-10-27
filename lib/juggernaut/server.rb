@@ -263,10 +263,12 @@ module Juggernaut
             publish clients.map{|client| client.to_hash}.to_json
           when :show_client
             query_needs :client_id
-            publish Juggernaut::Client.find_by_id(@request[:client_id]).to_json
+            clients = Juggernaut::Client.find_by_id(@request[:client_id])
+            publish clients.map{|client| client.to_hash}.to_json
           when :show_clients_for_channels
             query_needs :channels
-            publish Juggernaut::Client.find_by_channels(@request[:channels]).to_json
+            clients = Juggernaut::Client.find_by_channels(@request[:channels])
+            publish clients.map{|client| client.to_hash}.to_json
         else
           raise MalformedQuery, @request
         end
